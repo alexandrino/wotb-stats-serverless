@@ -1,0 +1,19 @@
+{
+  "name": "wotb-stats-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "start": "env $(cat ./env/.dev | xargs) sls invoke local -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandrino/wotb-stats-serverless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexandrino/wotb-stats-serverless/issues"
+  },
+  "homepage": "https://github.com/alexandrino/wotb-stats-serverless#readme"
+}
