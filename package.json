@@ -4,7 +4,8 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "start": "env $(cat ./env/.dev | xargs) sls invoke local -f"
+    "start": "sls invoke local -f",
+    "deploy": "sls deploy -v"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/alexandrino/wotb-stats-serverless/issues"
   },
-  "homepage": "https://github.com/alexandrino/wotb-stats-serverless#readme"
+  "homepage": "https://github.com/alexandrino/wotb-stats-serverless#readme",
+  "dependencies": {
+    "aws-sdk": "^2.166.0",
+    "axios": "^0.17.1"
+  }
 }
