@@ -1,0 +1,9 @@
+{
+  "Records": [
+    {
+      "Sns": {
+        "Message": "{\"accountId\":\"999999\"}"
+      }
+    }
+  ]
+}
