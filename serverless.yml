@@ -17,8 +17,8 @@ functions:
     handler: playerIndexer/handler.personalDataIndexer
     events:
       - schedule:
-        name: accountIndexer
-        rate: cron(0 12 * * ? *)
+          name: accountIndexer
+          rate: cron(0 12 * * ? *)
   playerAchievementsIndexer:
     handler: playerIndexer/handler.achievementIndexer
   vehicleIndexer:
