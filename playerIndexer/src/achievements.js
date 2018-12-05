@@ -1,7 +1,7 @@
 const axios = require('axios');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const { getDate } = require('/utils/date');
+const { getDate } = require('../../utils/date');
 
 const dateObj = getDate();
 const getFolderPath = `${dateObj.date}-${dateObj.timestamp}`;
