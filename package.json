@@ -6,6 +6,7 @@
   "scripts": {
     "invoke": "SLS_DEBUG=* npx serverless invoke local -f",
     "deploy": "npx serverless deploy -v",
+    "test": "export $( cat .test/.test.env ) && jest --coverageReporters=text-summary  --coverage --runInBand --no-cache",
     "lint": "eslint '**/*.js'"
   },
   "repository": {
@@ -27,6 +28,11 @@
   "dependencies": {
     "aws-sdk": "2.166.0",
     "axios": "0.17.1",
-    "serverless": "1.32.0"
+    "bluebird": "^3.5.3",
+    "jest": "^23.6.0",
+    "nock": "^10.0.4",
+    "ramda": "^0.26.1",
+    "serverless": "1.32.0",
+    "sinon": "^7.2.2"
   }
 }

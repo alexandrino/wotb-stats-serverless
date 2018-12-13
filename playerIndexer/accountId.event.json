@@ -2,7 +2,7 @@
   "Records": [
     {
       "Sns": {
-        "Message": "{\"accountId\":\"999999\"}"
+        "Message": "{\"accountId\":\"999\"}"
       }
     }
   ]
