@@ -15,7 +15,7 @@ const getPersonalStats = async (options) => {
       accountId,
     }
     await playerService.savePlayerData(body)
-    console.log('Get personal data successfully')
+    console.log('Get personal data successfully', body)
     return body
   } catch (error) {
     console.error(error)

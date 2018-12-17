@@ -5,21 +5,23 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - s3:*
+        - dynamodb:*
       Resource: "*"
   environment:
     ACCOUNT_ID: ${file(./env/dev.json):ACCOUNT_ID}
     API_ENDPOINT: ${file(./env/dev.json):API_ENDPOINT}
     APP_ID: ${file(./env/dev.json):APP_ID}
-    S3_BUCKET: ${file(./env/dev.json):S3_BUCKET}
 functions:
   playerIndexer:
     handler: playerIndexer/handler.personalDataIndexer
     events:
       - schedule:
-        name: accountIndexer
-        rate: cron(0 12 * * ? *)
-  playerAchievementsIndexer:
-    handler: playerIndexer/handler.achievementIndexer
-  vehicleIndexer:
-    handler: vehicleIndexer/handler.indexer
+          name: accountIndexer
+          rate: cron(0 12 * * ? *)
+  playerInfo:
+    handler: playerInfo/handler.playerInfo
+    events:
+      - http:
+          path: player-info
+          method: get
+          cors: true
