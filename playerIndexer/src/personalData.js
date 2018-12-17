@@ -1,5 +1,5 @@
 const axios = require('axios')
-const dynamo = require('./repository/dynamo')
+const playerService = require('../../services/player')
 
 const { API_ENDPOINT, APP_ID } = process.env
 
@@ -14,7 +14,7 @@ const getPersonalStats = async (options) => {
       statistics: JSON.stringify(statistics.all),
       accountId,
     }
-    await dynamo.savePlayerData(body)
+    await playerService.savePlayerData(body)
     console.log('Get personal data successfully')
     return body
   } catch (error) {

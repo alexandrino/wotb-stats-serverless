@@ -1,11 +1,11 @@
 const nock = require('nock')
 const sinon = require('sinon')
 const { getPersonalStats } = require('./personalData')
-const dynamo = require('./repository/dynamo')
+const playerService = require('../../services/player')
 
 describe('PlayerIndexer', () => {
   beforeEach(() => {
-    sinon.stub(dynamo, 'savePlayerData').resolves({})
+    sinon.stub(playerService, 'savePlayerData').resolves({})
   })
 
   afterEach(() => {
