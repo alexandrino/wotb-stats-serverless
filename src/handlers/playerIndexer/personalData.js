@@ -1,10 +1,11 @@
 const axios = require('axios')
+const logger = require('../../utils/logger')
 const playerService = require('../../services/player')
 
 const { API_ENDPOINT, APP_ID } = process.env
 
 const getPersonalStats = async (options) => {
-  console.log('Get personal data start')
+  logger.debug('Get personal data start')
   try {
     const res = await axios.get(`${API_ENDPOINT}/account/info/?application_id=${APP_ID}&account_id=${options.accountId}`)
     const { data: { data } } = res
@@ -15,10 +16,10 @@ const getPersonalStats = async (options) => {
       accountId,
     }
     await playerService.savePlayerData(body)
-    console.log('Get personal data successfully', body)
+    logger.debug('Get personal data successfully')
     return body
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return {}
   }
 }

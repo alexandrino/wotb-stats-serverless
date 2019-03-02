@@ -1,9 +1,10 @@
 const playerService = require('../../services/player')
+const logger = require('../../utils/logger')
 
 const getData = async ({ accountId }) => {
   try {
     const res = await playerService.getPlayerData(accountId)
-    console.log('getPlayerData data saved successfully', res)
+    logger.debug('getPlayerData data saved successfully')
 
     const body = res.Items.map(s => ({
       ...s, statistics: JSON.parse(s.statistics),
@@ -11,10 +12,10 @@ const getData = async ({ accountId }) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify(body),
+      body,
     }
   } catch (error) {
-    console.error('getPlayerData error', error)
+    logger.error('getPlayerData error', error)
     // Todo: Use monads
     return null
   }
