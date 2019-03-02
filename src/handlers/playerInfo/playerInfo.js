@@ -1,4 +1,4 @@
-const playerService = require('../../../services/player')
+const playerService = require('../../services/player')
 
 const getData = async ({ accountId }) => {
   try {

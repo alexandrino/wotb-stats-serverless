@@ -18,22 +18,22 @@ provider:
     APP_ID: ${file(./env/dev.json):APP_ID}
 functions:
   playerIndexer:
-    handler: handlers/playerIndexer/handler.personalDataIndexer
+    handler: src/handlers/playerIndexer/handler.personalDataIndexer
     package:
       include: 
-        - handlers/playerIndexer/**
-        - services/**
+        - src/handlers/playerIndexer/**
+        - src/services/**
         - node_modules/**
     events:
       - schedule:
           name: accountIndexer
           rate: cron(0 12 * * ? *)
   playerInfo:
-    handler: handlers/playerInfo/handler.playerInfo
+    handler: src/handlers/playerInfo/handler.playerInfo
     package:
       include: 
-        -handlers/ playerInfo/**
-        - services/**
+        - src/handlers/playerInfo/**
+        - src/services/**
         - node_modules/**
     events:
       - http:

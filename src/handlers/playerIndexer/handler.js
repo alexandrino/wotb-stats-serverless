@@ -1,4 +1,4 @@
-const personalData = require('./src/personalData')
+const personalData = require('./personalData')
 
 module.exports.personalDataIndexer = async () => {
   const account = personalData.getPersonalStats({

@@ -1,4 +1,4 @@
-const playerInfo = require('./src/playerInfo')
+const playerInfo = require('./playerInfo')
 
 module.exports.playerInfo = async () => {
   const playerStats = playerInfo.getData({
