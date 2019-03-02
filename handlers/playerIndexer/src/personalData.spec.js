@@ -1,7 +1,7 @@
 const nock = require('nock')
 const sinon = require('sinon')
 const { getPersonalStats } = require('./personalData')
-const playerService = require('../../services/player')
+const playerService = require('../../../services/player')
 
 describe('PlayerIndexer', () => {
   beforeEach(() => {

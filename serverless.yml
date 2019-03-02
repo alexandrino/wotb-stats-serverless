@@ -1,4 +1,9 @@
 service: aws-nodejs
+package:
+  individually: true
+  excludeDevDependencies: false
+  exclude:
+    - "**"
 provider:
   name: aws
   runtime: nodejs8.10
@@ -13,13 +18,23 @@ provider:
     APP_ID: ${file(./env/dev.json):APP_ID}
 functions:
   playerIndexer:
-    handler: playerIndexer/handler.personalDataIndexer
+    handler: handlers/playerIndexer/handler.personalDataIndexer
+    package:
+      include: 
+        - handlers/playerIndexer/**
+        - services/**
+        - node_modules/**
     events:
       - schedule:
           name: accountIndexer
           rate: cron(0 12 * * ? *)
   playerInfo:
-    handler: playerInfo/handler.playerInfo
+    handler: handlers/playerInfo/handler.playerInfo
+    package:
+      include: 
+        -handlers/ playerInfo/**
+        - services/**
+        - node_modules/**
     events:
       - http:
           path: player-info

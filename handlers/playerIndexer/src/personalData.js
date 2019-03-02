@@ -1,5 +1,5 @@
 const axios = require('axios')
-const playerService = require('../../services/player')
+const playerService = require('../../../services/player')
 
 const { API_ENDPOINT, APP_ID } = process.env
 
