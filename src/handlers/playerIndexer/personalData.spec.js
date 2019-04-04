@@ -1,6 +1,6 @@
 const nock = require('nock')
 const sinon = require('sinon')
-const { getPersonalStats } = require('./personalData')
+const { savePersonalStats } = require('./personalData')
 const playerService = require('../../services/player')
 
 describe('PlayerIndexer', () => {
@@ -26,7 +26,7 @@ describe('PlayerIndexer', () => {
     })
 
   test('fetch data', async () => {
-    const response = await getPersonalStats({ accountId: 123 })
-    expect(response).toMatchObject({ accountId: 999, statistics: {} })
+    const response = await savePersonalStats({ accountId: 123 })
+    expect(response).toMatchObject({})
   })
 })

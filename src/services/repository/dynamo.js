@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk')
 const { promisifyAll } = require('bluebird')
 const uuidv1 = require('uuid/v1')
-
+const logger = require('../../utils/logger')
 
 const tableName = 'playerStats'
 
@@ -21,10 +21,10 @@ const playerRepository = () => {
 
     try {
       const res = await docClient.putAsync(params)
-      console.log('Player data saved successfully')
+      logger.debug('Player data saved successfully')
       return res
     } catch (error) {
-      console.error('savePlayerData error', error)
+      logger.error('savePlayerData error', error)
       throw error
     }
   }
@@ -50,7 +50,7 @@ const playerRepository = () => {
     try {
       return docClient.scanAsync(params)
     } catch (error) {
-      console.error('getPlayerData error', error)
+      logger.error('getPlayerData error', error)
       throw error
     }
   }
