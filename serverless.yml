@@ -1,4 +1,5 @@
 service: aws-nodejs
+
 package:
   individually: true
   excludeDevDependencies: false
@@ -13,9 +14,9 @@ provider:
         - dynamodb:*
       Resource: "*"
   environment:
-    ACCOUNT_ID: ${file(./env/dev.json):ACCOUNT_ID}
-    API_ENDPOINT: ${file(./env/dev.json):API_ENDPOINT}
-    APP_ID: ${file(./env/dev.json):APP_ID}
+    NODE_ENV: production
+    API_ENDPOINT: https://api.wotblitz.com/wotb
+    APP_ID: ${env:APP_ID}
 functions:
   playerIndexer:
     handler: src/handlers/playerIndexer/handler.personalDataIndexer
@@ -23,6 +24,7 @@ functions:
       include: 
         - src/handlers/playerIndexer/**
         - src/services/**
+        - src/utils/**
         - node_modules/**
     events:
       - schedule:
@@ -34,6 +36,7 @@ functions:
       include: 
         - src/handlers/playerInfo/**
         - src/services/**
+        - src/utils/**
         - node_modules/**
     events:
       - http:

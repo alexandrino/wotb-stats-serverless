@@ -4,37 +4,44 @@
 #
 version: 2
 jobs:
-  build:
-    branches:
-      only:
-        - master
+  test:
     docker:
-      # specify the version you desire here
       - image: circleci/node:8.10
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
+          keys: v1-test-job-{{ checksum "package.json" }}
       - run: npm install
-
+      - run: npm test
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-test-job-{{ checksum "package.json" }}
+  build:
+    docker:
+      - image: circleci/node:8.10
+    working_directory: ~/repo
+    environment:
+      NODE_ENV: production
+    steps:
+      - checkout
+      - restore_cache:
+          keys: v1-build-{{ checksum "package.json" }}
+      - run: npm install
+      - run: npm run deploy
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-build-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: npm test
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
+          filters:
+            branches:
+              only: master

@@ -6,9 +6,9 @@ const getData = async ({ accountId }) => {
     const res = await playerService.getPlayerData(accountId)
     logger.debug('getPlayerData data saved successfully')
 
-    const body = res.Items.map(s => ({
+    const body = JSON.stringify(res.Items.map(s => ({
       ...s, statistics: JSON.parse(s.statistics),
-    }))
+    })))
 
     return {
       statusCode: 200,
@@ -16,8 +16,13 @@ const getData = async ({ accountId }) => {
     }
   } catch (error) {
     logger.error('getPlayerData error', error)
-    // Todo: Use monads
-    return null
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        errorMessage: error.errorMessage,
+      }),
+    }
   }
 }
 
