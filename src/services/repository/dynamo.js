@@ -30,11 +30,12 @@ const playerRepository = () => {
   }
 
   const getPlayerData = async (accountId) => {
-    const startDate = new Date('Wed, 01 January 2018 00:00:00').getTime()
-    const endDate = new Date('Wed, 31 December 2018 00:00:00').getTime()
+    const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).getTime()
+    const endDate = Date.now()
 
     const params = {
       TableName: tableName,
+      Limit: 50,
       ExpressionAttributeNames: {
         '#createdAt': 'createdAt',
         '#accountId': 'accountId',
