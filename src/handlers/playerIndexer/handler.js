@@ -5,5 +5,6 @@ module.exports.personalDataIndexer = async () => {
   const account = personalData.savePersonalStats({
     accountId,
   })
+
   return account
 }
