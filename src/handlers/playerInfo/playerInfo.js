@@ -2,9 +2,11 @@ const playerService = require('../../services/player')
 const logger = require('../../utils/logger')
 
 const getData = async ({ accountId }) => {
+  logger.debug(`playerInfo.getData.init ${accountId}`)
+
   try {
     const res = await playerService.getPlayerData(accountId)
-    logger.debug('getPlayerData data saved successfully')
+    logger.debug('playerInfo.getData.success', accountId)
 
     const body = JSON.stringify(res.Items.map(s => ({
       ...s, statistics: JSON.parse(s.statistics),
@@ -15,7 +17,7 @@ const getData = async ({ accountId }) => {
       body,
     }
   } catch (error) {
-    logger.error('getPlayerData error', error)
+    logger.error('playerInfo.getData.error', error)
 
     return {
       statusCode: 500,

@@ -2,7 +2,9 @@ const playerInfo = require('./playerInfo')
 
 module.exports.playerInfo = async () => {
   const { ACCOUNT_ID: accountId } = process.env
-  const playerStats = playerInfo.getData({
+  console.log('----', accountId)
+
+  const playerStats = await playerInfo.getData({
     accountId,
   })
 
