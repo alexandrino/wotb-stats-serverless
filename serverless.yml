@@ -17,6 +17,7 @@ provider:
     NODE_ENV: production
     API_ENDPOINT: https://api.wotblitz.com/wotb
     APP_ID: ${env:APP_ID}
+    ACCOUNT_ID: ${env:ACCOUNT_ID}
 functions:
   playerIndexer:
     handler: src/handlers/playerIndexer/handler.personalDataIndexer
