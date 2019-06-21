@@ -12,7 +12,7 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:*
+        - rds:*
       Resource: "*"
   environment:
     NODE_ENV: production

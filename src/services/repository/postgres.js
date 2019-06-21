@@ -9,6 +9,8 @@ const savePlayerData = async ({ accountId, statistics }) => knex.insert({
 })
   .into('player_stats')
   .returning('id')
+  .timeout(operationsTimeout)
+
 
 const getPlayerData = async accountId => knex.select('player_stats.*')
   .from('player_stats')
