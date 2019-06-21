@@ -19,6 +19,7 @@ provider:
     API_ENDPOINT: https://api.wotblitz.com/wotb
     APP_ID: ${env:APP_ID}
     ACCOUNT_ID: ${env:ACCOUNT_ID}
+    AWS_RDS_DB_URI: ${env:AWS_RDS_DB_URI}
 
 functions:
   playerIndexer:
