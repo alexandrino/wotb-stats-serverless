@@ -7,10 +7,7 @@ const getData = async ({ accountId }) => {
   try {
     const res = await playerService.getPlayerData(accountId)
     logger.debug('playerInfo.getData.success', accountId)
-
-    const body = JSON.stringify(res.Items.map(s => ({
-      ...s, statistics: JSON.parse(s.statistics),
-    })))
+    const body = JSON.stringify(res.map(s => s.stats))
 
     return {
       statusCode: 200,

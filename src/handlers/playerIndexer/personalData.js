@@ -6,14 +6,14 @@ const playerService = require('../../services/player')
 const { API_ENDPOINT, APP_ID } = process.env
 
 const fetchPersonalStats = async (options) => {
-  logger.debug('Get personal data start')
+  logger.debug('Get personal data start', options)
 
   try {
     const res = await axios.get(`${API_ENDPOINT}/account/info/?application_id=${APP_ID}&account_id=${options.accountId}`)
     const { data: { data } } = res
+
     const accountData = data[options.accountId]
     const { statistics, account_id: accountId } = accountData
-
     const body = {
       statistics: JSON.stringify(statistics.all),
       accountId,
