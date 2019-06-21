@@ -1,6 +1,6 @@
-const { savePlayerData, getPlayerData } = require('./repository/postgres')
+const playerRepository = require('./repository/dynamo')
 
 module.exports = {
-  savePlayerData,
-  getPlayerData,
+  savePlayerData: async data => playerRepository().savePlayerData(data),
+  getPlayerData: async data => playerRepository().getPlayerData(data),
 }
