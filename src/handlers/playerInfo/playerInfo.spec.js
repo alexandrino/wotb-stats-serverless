@@ -37,6 +37,6 @@ describe('PlayerIndexer', () => {
       ],
     })
     const result = await getData({ accountId: 111 })
-    expect(result).toMatchObject({ body: JSON.stringify([{ statistics }]) })
+    expect(result).toMatchObject({ body: [{ statistics }] })
   })
 })
