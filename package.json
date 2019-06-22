@@ -7,6 +7,7 @@
     "invoke:local": "env $(cat .local.env) npx serverless invoke local -f playerInfo -p src/handlers/playerInfo/playerInfo.event.json",
     "deploy": "npx serverless deploy -v",
     "test": "export $( cat .test/.test.env ) && jest --coverageReporters=text-summary  --coverage --runInBand --no-cache",
+    "test:full": "export $( cat .test/.test.env ) && jest --coverage --runInBand --no-cache",
     "lint": "eslint '**/*.js'"
   },
   "repository": {
