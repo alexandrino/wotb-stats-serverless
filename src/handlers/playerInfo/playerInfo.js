@@ -9,7 +9,7 @@ const getData = async ({ accountId }) => {
     logger.debug('playerInfo.getData.success', accountId)
 
     const body = JSON.stringify(res.Items.map(s => ({
-      statistics: JSON.parse(s.statistics),
+      statistics: s.statistics,
     })))
 
     return {

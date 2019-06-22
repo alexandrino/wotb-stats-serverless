@@ -2,6 +2,9 @@
 module.exports = {
   collectCoverageFrom: [
     '**/*.js',
+    '**/*.js',
+    '!.*.js',
+    '!*.js',
     '!**/coverage/**/*.js',
   ],
   testRegex: '\\.spec\\.js$',
