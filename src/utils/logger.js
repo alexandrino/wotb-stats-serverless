@@ -2,6 +2,7 @@ const winston = require('winston')
 
 const logger = winston.createLogger({
   level: 'debug',
+  silent: process.env.NODE_ENV === 'test',
   format: winston.format.json(),
   defaultMeta: { service: 'user-service' },
 })

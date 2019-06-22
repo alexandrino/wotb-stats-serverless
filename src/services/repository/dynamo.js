@@ -28,19 +28,18 @@ const playerRepository = () => {
   }
 
   const getPlayerData = async (accountId) => {
-    // const startDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).getTime()
-    // const endDate = Date.now()
     const params = {
       TableName: tableName,
       KeyConditionExpression: 'accountId = :accountId',
       ExpressionAttributeValues: {
-        ':accountId' : Number(accountId),
+        ':accountId': Number(accountId),
       },
     }
 
     try {
       const result = await docClient.queryAsync(params)
-      console.log(result)
+      logger.error('getPlayerData.success', result.length)
+
       return result
     } catch (error) {
       logger.error('getPlayerData error', error)
