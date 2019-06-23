@@ -8,8 +8,9 @@ const getData = async ({ accountId }) => {
     const res = await playerService.getPlayerData(accountId)
     logger.debug('playerInfo.getData.success', accountId)
 
-    const body = JSON.stringify(res.Items.map(s => ({
-      statistics: s.statistics,
+    const body = JSON.stringify(res.Items.map(({ statistics, createdAt }) => ({
+      statistics,
+      createdAt,
     })))
 
     return {
