@@ -1,6 +1,11 @@
 const playerService = require('../../services/player')
 const logger = require('../../utils/logger')
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Credentials': true,
+}
+
 const getData = async ({ accountId }) => {
   logger.debug(`playerInfo.getData.init ${accountId}`)
 
@@ -15,6 +20,7 @@ const getData = async ({ accountId }) => {
 
     return {
       statusCode: 200,
+      headers,
       body,
     }
   } catch (error) {
@@ -22,6 +28,7 @@ const getData = async ({ accountId }) => {
 
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({
         errorMessage: error.errorMessage,
       }),
