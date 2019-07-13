@@ -8,25 +8,27 @@ jobs:
     docker:
       - image: circleci/node:8.10
     steps:
-      - checkout
       - restore_cache:
-          keys: v1-test-job-{{ checksum "package.json" }}
+          keys: 
+            - v1-build-{{ checksum "package.json" }}
+      - checkout
       - run: npm install
       - run: npm test
       - save_cache:
           paths:
             - node_modules
-          key: v1-test-job-{{ checksum "package.json" }}
-  build:
+          key: v1-build-{{ checksum "package.json" }}
+  deploy:
     docker:
       - image: circleci/node:8.10
     working_directory: ~/repo
     environment:
       NODE_ENV: production
     steps:
-      - checkout
       - restore_cache:
-          keys: v1-build-{{ checksum "package.json" }}
+          keys: 
+            - v1-build-{{ checksum "package.json" }}
+      - checkout
       - run: npm install
       - run: npm run deploy
       - save_cache:
@@ -36,10 +38,10 @@ jobs:
 
 workflows:
   version: 2
-  build_and_test:
+  build_and_deploy:
     jobs:
       - test
-      - build:
+      - deploy:
           requires:
             - test
           filters:
