@@ -5,4 +5,5 @@ playerIndexer/accountId.event.json
 # Serverless directories
 coverage
 .serverless
+.local.env
 env/
