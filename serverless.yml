@@ -43,7 +43,7 @@ functions:
         - node_modules/**
     events:
       - schedule:
-          name: accountIndexer
+          name: vehicleIndexer
           rate: cron(0 6 * * ? *)
   playerInfo:
     handler: src/handlers/playerInfo/handler.playerInfo
