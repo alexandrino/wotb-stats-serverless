@@ -1,10 +1,24 @@
 const playerVehicles = require('./playerVehicles')
 
-module.exports.playerVehicles = async (req) => {
+const vehicleList = async (req) => {
   const { accountId } = req.queryStringParameters
-  const playerStats = await playerVehicles.getData({
+  const playerStats = await playerVehicles.getPlayerVehicles({
     accountId,
   })
 
   return playerStats
+}
+
+const vehicleInfo = async (req) => {
+  const { vehicleId } = req.queryStringParameters
+  const playerStats = await playerVehicles.getVehicleInfo({
+    vehicleId,
+  })
+
+  return playerStats
+}
+
+module.exports = {
+  vehicleInfo,
+  vehicleList,
 }

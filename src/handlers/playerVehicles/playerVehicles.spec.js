@@ -1,6 +1,6 @@
 const sinon = require('sinon')
 const vehicleService = require('../../services/vehicle')
-const { getData } = require('./playerVehicles')
+const { getPlayerVehicles } = require('./playerVehicles')
 
 describe('PlayerVehicles', () => {
   afterEach(() => {
@@ -16,7 +16,7 @@ describe('PlayerVehicles', () => {
         },
       ],
     })
-    const result = await getData({ accountId: 111 })
+    const result = await getPlayerVehicles({ accountId: 111 })
     expect(result).toMatchObject({
       body: JSON.stringify([{
         vehicleId: 17,

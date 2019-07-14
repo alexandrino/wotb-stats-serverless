@@ -69,10 +69,31 @@ const vehicleRepository = () => {
     }
   }
 
+  const getVehicleInfo = async (vehicleId) => {
+    const params = {
+      TableName: playerVehiclesDataTable,
+      KeyConditionExpression: 'playerVehicleDataId = :vehicleId',
+      ExpressionAttributeValues: {
+        ':vehicleId': vehicleId,
+      },
+    }
+
+    try {
+      const result = await docClient.queryAsync(params)
+      logger.error('getVehicleInfo.success', result.length)
+
+      return result
+    } catch (error) {
+      logger.error('getVehicleInfo.error', error)
+      throw error
+    }
+  }
+
   return {
     savePlayerVehicles,
     savePlayerVehiclesData,
     getPlayerVehicles,
+    getVehicleInfo,
   }
 }
 

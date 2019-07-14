@@ -59,7 +59,7 @@ functions:
           method: get
           cors: true
   playerVehicles:
-    handler: src/handlers/playerVehicles/handler.playerVehicles
+    handler: src/handlers/playerVehicles/handler.vehicleList
     package:
       include: 
         - src/handlers/playerVehicles/**
@@ -69,5 +69,18 @@ functions:
     events:
       - http:
           path: player-vehicles
+          method: get
+          cors: true
+  playerVehicleInfo:
+    handler: src/handlers/playerVehicles/handler.vehicleInfo
+    package:
+      include: 
+        - src/handlers/playerVehicles/**
+        - src/services/**
+        - src/utils/**
+        - node_modules/**
+    events:
+      - http:
+          path: player-vehicle
           method: get
           cors: true

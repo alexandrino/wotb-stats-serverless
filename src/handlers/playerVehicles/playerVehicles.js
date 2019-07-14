@@ -6,12 +6,12 @@ const headers = {
   'Access-Control-Allow-Credentials': true,
 }
 
-const getData = async ({ accountId }) => {
-  logger.debug(`playerVehicles.getData.init ${accountId}`)
+const getPlayerVehicles = async ({ accountId }) => {
+  logger.debug(`playerVehicles.getVehicles.init ${accountId}`)
 
   try {
     const res = await vehicleService.getPlayerVehicles(accountId)
-    logger.debug('playerVehicles.getData.success', accountId)
+    logger.debug('playerVehicles.getVehicles.success', accountId)
 
     const body = JSON.stringify(res.Items.map(({ vehicleId, createdAt }) => ({
       vehicleId,
@@ -24,7 +24,7 @@ const getData = async ({ accountId }) => {
       body,
     }
   } catch (error) {
-    logger.error('playerVehicles.getData.error', error)
+    logger.error('playerVehicles.getVehicles.error', error)
 
     return {
       statusCode: 500,
@@ -36,4 +36,38 @@ const getData = async ({ accountId }) => {
   }
 }
 
-module.exports = { getData }
+const getVehicleInfo = async ({ vehicleId }) => {
+  logger.debug(`getVehicleInfo.getVehicleInfo.init ${vehicleId}`)
+
+  try {
+    const res = await vehicleService.getVehicleInfo(vehicleId)
+    logger.debug('getVehicleInfo.getVehicleInfo.success', vehicleId)
+    const body = JSON.stringify(res.Items.map(({ playerVehicleDataId, createdAt, data }) => ({
+      playerVehicleDataId,
+      createdAt,
+      data,
+    })))
+
+    return {
+      statusCode: 200,
+      headers,
+      body,
+    }
+  } catch (error) {
+    logger.error('getVehicleInfo.getVehicleInfo.error', error)
+
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        errorMessage: error.errorMessage,
+      }),
+    }
+  }
+}
+
+
+module.exports = {
+  getPlayerVehicles,
+  getVehicleInfo,
+}
