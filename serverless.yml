@@ -58,3 +58,16 @@ functions:
           path: player-info
           method: get
           cors: true
+  playerVehicles:
+    handler: src/handlers/playerVehicles/handler.playerVehicles
+    package:
+      include: 
+        - src/handlers/playerVehicles/**
+        - src/services/**
+        - src/utils/**
+        - node_modules/**
+    events:
+      - http:
+          path: player-vehicles
+          method: get
+          cors: true
