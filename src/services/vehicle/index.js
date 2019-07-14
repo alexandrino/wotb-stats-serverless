@@ -1,6 +1,13 @@
 const vehicleRepository = require('./repository/dynamo')
 
+const {
+  savePlayerVehicles,
+  savePlayerVehiclesData,
+  getPlayerVehicles,
+} = vehicleRepository()
+
 module.exports = {
-  saveVehicleData: async data => vehicleRepository().saveVehicleData(data),
-  getVehicleData: async data => vehicleRepository().getVehicleData(data),
+  savePlayerVehicles: async data => savePlayerVehicles(data),
+  savePlayerVehiclesData: async data => savePlayerVehiclesData(data),
+  getPlayerVehicles: async data => getPlayerVehicles(data),
 }

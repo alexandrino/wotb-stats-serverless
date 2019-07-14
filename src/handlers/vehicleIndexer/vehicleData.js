@@ -11,17 +11,9 @@ const fetchVehicleStats = async (options) => {
   const { accountId } = options
   try {
     const url = `${API_ENDPOINT}/tanks/stats/?application_id=${APP_ID}&account_id=${accountId}`
-    const res = await axios.get(url)
-    const { data: { data } } = res
-
-    const vehicleData = data[accountId].map(vehicle => ({
-      accountId: Number(accountId),
-      vehicleId: vehicle.tank_id,
-      ...vehicle,
-    }))
-
+    const { data: { data } } = await axios.get(url)
     logger.debug('fetchVehicleStats.success')
-    return Success(vehicleData)
+    return Success(data[accountId])
   } catch (error) {
     logger.error('fetchVehicleStats.error', error)
     return Fail('Unable to retrieve vehicle data')
@@ -34,7 +26,11 @@ const saveVehicleStats = async (options) => {
   try {
     const vehicleData = await fetchVehicleStats(options)
     await vehicleData.map(vehicles => Promise.all(
-      Promise.map(vehicles, vehicleService.saveVehicleData),
+      Promise.map(vehicles, vehicleService.savePlayerVehicles),
+    )).success()
+
+    await vehicleData.map(vehicles => Promise.all(
+      Promise.map(vehicles, vehicleService.savePlayerVehiclesData),
     )).success()
 
     logger.debug('saveVehicleStats.success')

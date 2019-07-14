@@ -11,9 +11,10 @@ const mockAPIResponse = {
   battles: 10,
 }
 
-describe('PlayerIndexer', () => {
+describe('VehicleIndexer', () => {
   beforeEach(() => {
-    sinon.stub(vehicleService, 'saveVehicleData').resolves({})
+    sinon.stub(vehicleService, 'savePlayerVehicles').resolves({})
+    sinon.stub(vehicleService, 'savePlayerVehiclesData').resolves({})
   })
 
   afterEach(() => {
@@ -34,8 +35,6 @@ describe('PlayerIndexer', () => {
     const response = await saveVehicleStats({ accountId: 123 })
     expect(response).toMatchObject(Success([{
       ...mockAPIResponse,
-      accountId: 123,
-      vehicleId: 1111,
     }]))
   })
 })

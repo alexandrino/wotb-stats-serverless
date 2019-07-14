@@ -12,7 +12,7 @@ describe('VehicleIndexer', () => {
       putAsync: () => Promise.resolve({}),
     })
     const vehicleRepository = dynamo()
-    const result = await vehicleRepository.saveVehicleData({ name: 'foo' })
+    const result = await vehicleRepository.savePlayerVehicles({ name: 'foo' })
     expect(result).toMatchObject({})
   })
 
@@ -20,7 +20,6 @@ describe('VehicleIndexer', () => {
     const mockItems = [
       {
         statistics: {
-          battles: 1,
           accountId: 123,
           vehicleId: 111,
         },
@@ -33,7 +32,7 @@ describe('VehicleIndexer', () => {
       }),
     })
     const vehicleRepository = dynamo()
-    const result = await vehicleRepository.getVehicleData({ accountId: 123 })
+    const result = await vehicleRepository.getPlayerVehicles({ accountId: 123 })
     expect(result).toMatchObject({
       Items: mockItems,
     })

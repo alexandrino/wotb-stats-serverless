@@ -2,34 +2,56 @@ const AWS = require('aws-sdk')
 const { promisifyAll } = require('bluebird')
 const logger = require('../../../utils/logger')
 
-const tableName = 'vehicleStats'
+const playerVehiclesTable = 'playerVehicles'
+const playerVehiclesDataTable = 'playerVehiclesData'
 
 const vehicleRepository = () => {
   const docClient = new AWS.DynamoDB.DocumentClient()
   promisifyAll(docClient)
 
-  const saveVehicleData = async (data) => {
+  const savePlayerVehicles = async (data) => {
     const params = {
-      TableName: tableName,
+      TableName: playerVehiclesTable,
       Item: {
         createdAt: Date.now(),
-        ...data,
+        accountId: data.account_id,
+        vehicleId: data.tank_id,
       },
     }
 
     try {
       const res = await docClient.putAsync(params)
-      logger.debug('Vehicle data saved successfully')
+      logger.debug('savePlayerVehicles.success')
       return res
     } catch (error) {
-      logger.error('saveVehicleData error', error)
+      logger.error('savePlayerVehicles.error', error)
       throw error
     }
   }
 
-  const getVehicleData = async (accountId) => {
+  const savePlayerVehiclesData = async (data) => {
     const params = {
-      TableName: tableName,
+      TableName: playerVehiclesDataTable,
+      Item: {
+        createdAt: Date.now(),
+        playerVehicleDataId: `${data.account_id}-${data.tank_id}`,
+        data,
+      },
+    }
+
+    try {
+      const res = await docClient.putAsync(params)
+      logger.debug('savePlayerVehiclesData.success')
+      return res
+    } catch (error) {
+      logger.error('savePlayerVehiclesData.error', error)
+      throw error
+    }
+  }
+
+  const getPlayerVehicles = async (accountId) => {
+    const params = {
+      TableName: playerVehiclesTable,
       KeyConditionExpression: 'accountId = :accountId',
       ExpressionAttributeValues: {
         ':accountId': Number(accountId),
@@ -38,18 +60,19 @@ const vehicleRepository = () => {
 
     try {
       const result = await docClient.queryAsync(params)
-      logger.error('getVehicleData.success', result.length)
+      logger.error('getPlayerVehicles.success', result.length)
 
       return result
     } catch (error) {
-      logger.error('getVehicleData error', error)
+      logger.error('getPlayerVehicles.error', error)
       throw error
     }
   }
 
   return {
-    saveVehicleData,
-    getVehicleData,
+    savePlayerVehicles,
+    savePlayerVehiclesData,
+    getPlayerVehicles,
   }
 }
 
