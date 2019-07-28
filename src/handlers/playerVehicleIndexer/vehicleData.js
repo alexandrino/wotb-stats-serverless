@@ -25,16 +25,24 @@ const saveVehicleStats = async (options) => {
 
   try {
     const vehicleData = await fetchVehicleStats(options)
-    await vehicleData.map(vehicles => Promise.all(
-      Promise.map(vehicles, vehicleService.savePlayerVehicles),
-    )).success()
 
-    await vehicleData.map(vehicles => Promise.all(
-      Promise.map(vehicles, vehicleService.savePlayerVehiclesData),
-    )).success()
+    const result = await vehicleData.map(async (vehicles) => {
+      const vehiclesWithInfo = await Promise.all(
+        Promise.map(vehicles, vehicleService.getVehicle),
+      )
+
+      await Promise.all(
+        Promise.map(vehiclesWithInfo, vehicleService.savePlayerVehicles),
+      )
+
+      await Promise.all(
+        Promise.map(vehicles, vehicleService.savePlayerVehiclesData),
+      )
+      return vehiclesWithInfo
+    }).success()
 
     logger.debug('saveVehicleStats.success')
-    return vehicleData
+    return result
   } catch (error) {
     logger.error('saveVehicleStats.error', error)
     return Fail('Enable to save vehicle\'s data')

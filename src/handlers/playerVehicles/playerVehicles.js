@@ -13,9 +13,8 @@ const getPlayerVehicles = async ({ accountId }) => {
     const res = await vehicleService.getPlayerVehicles(accountId)
     logger.debug('playerVehicles.getVehicles.success', accountId)
 
-    const body = JSON.stringify(res.Items.map(({ vehicleId, createdAt }) => ({
-      vehicleId,
-      createdAt,
+    const body = JSON.stringify(res.Items.map(data => ({
+      ...data,
     })))
 
     return {

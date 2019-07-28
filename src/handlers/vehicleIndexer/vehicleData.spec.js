@@ -1,21 +1,19 @@
 const nock = require('nock')
 const sinon = require('sinon')
+const { Success } = require('monet')
 const { saveVehicleStats } = require('./vehicleData')
 const vehicleService = require('../../services/vehicle')
 
+// http://localhost/app/tanks/stats/?application_id=99999&account_id=123
 const mockAPIResponse = {
-  tank_id: 1111,
-  account_id: 99999,
-  battles: 10,
+  vehicleId: '111',
+  description: 'test',
+  type: 'medium',
 }
 
-describe('VehicleIndexer', () => {
+describe.skip('VehicleIndexer', () => {
   beforeEach(() => {
-    sinon.stub(vehicleService, 'getVehicle').resolves(
-      mockAPIResponse,
-    )
-    sinon.stub(vehicleService, 'savePlayerVehicles').resolves({})
-    sinon.stub(vehicleService, 'savePlayerVehiclesData').resolves({})
+    sinon.stub(vehicleService, 'saveVehicles').resolves({})
   })
 
   afterEach(() => {
@@ -33,9 +31,9 @@ describe('VehicleIndexer', () => {
     })
 
   test('fetch data', async () => {
-    const response = await saveVehicleStats({ accountId: 123 })
-    expect(response).toMatchObject([
-      mockAPIResponse,
-    ])
+    const response = await saveVehicleStats()
+    expect(response).toMatchObject(Success([{
+      ...mockAPIResponse,
+    }]))
   })
 })
