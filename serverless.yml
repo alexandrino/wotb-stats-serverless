@@ -33,17 +33,17 @@ functions:
       - schedule:
           name: accountIndexer
           rate: cron(0 6 * * ? *)
-  vehicleIndexer:
-    handler: src/handlers/vehicleIndexer/handler.vehicleDataIndexer
+  playerVehicleIndexer:
+    handler: src/handlers/playerVehicleIndexer/handler.playerVehicleIndexer
     package:
       include: 
-        - src/handlers/vehicleIndexer/**
+        - src/handlers/playerVehicleIndexer/**
         - src/services/**
         - src/utils/**
         - node_modules/**
     events:
       - schedule:
-          name: vehicleIndexer
+          name: playerVehicleIndexer
           rate: cron(0 6 * * ? *)
   playerInfo:
     handler: src/handlers/playerInfo/handler.playerInfo

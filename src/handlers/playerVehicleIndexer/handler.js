@@ -1,6 +1,6 @@
 const vehicleData = require('./vehicleData')
 
-module.exports.vehicleDataIndexer = async () => {
+module.exports.playerVehicleIndexer = async () => {
   const { ACCOUNT_ID: accountId } = process.env
   const account = vehicleData.saveVehicleStats({
     accountId,
