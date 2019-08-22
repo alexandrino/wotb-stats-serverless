@@ -15,10 +15,10 @@ module.exports = {
   testURL: 'http://localhost',
   coverageThreshold: {
     global: {
-      branches: 40,
+      branches: 50,
       functions: 40,
-      lines: 40,
-      statements: 40,
+      lines: 50,
+      statements: 50,
     },
   },
 }

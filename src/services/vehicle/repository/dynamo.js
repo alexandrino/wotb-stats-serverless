@@ -1,10 +1,16 @@
 const AWS = require('aws-sdk')
 const { promisifyAll } = require('bluebird')
+const { Success, Fail } = require('monet')
 const logger = require('../../../utils/logger')
 
 const vehicleTable = 'vehicleInfo'
 const playerVehiclesTable = 'playerVehicles'
 const playerVehiclesDataTable = 'playerVehiclesData'
+
+const getErrorMessage = (message, error) => {
+  logger.error(message, error)
+  return Fail(message)
+}
 
 const vehicleRepository = () => {
   const docClient = new AWS.DynamoDB.DocumentClient()
@@ -52,65 +58,71 @@ const vehicleRepository = () => {
     }
   }
 
-  const savePlayerVehicles = async (data) => {
-    const params = {
-      TableName: playerVehiclesTable,
-      Item: {
-        createdAt: Date.now(),
-        images: data.images,
-        accountId: data.account_id,
-        vehicleId: data.tank_id,
-        ...data.info,
-      },
-    }
-
+  const savePlayerVehicles = async ({
+    images, account_id: accountId, tank_id: vehicleId, info,
+  }) => {
     try {
-      const res = await docClient.putAsync(params)
-      logger.debug('savePlayerVehicles.success')
-      return res
+      if (accountId && vehicleId && vehicleId && info) {
+        const params = {
+          TableName: playerVehiclesTable,
+          Item: {
+            createdAt: Date.now(),
+            images,
+            accountId,
+            vehicleId,
+            ...info,
+          },
+        }
+        const res = await docClient.putAsync(params)
+        logger.debug('savePlayerVehicles.success')
+        return Success(res)
+      }
+
+      return Fail('savePlayerVehicles invalid params')
     } catch (error) {
-      logger.error('savePlayerVehicles.error', error)
-      throw error
+      return getErrorMessage('savePlayerVehicles.error', error)
     }
   }
 
   const savePlayerVehiclesData = async (data) => {
-    const params = {
-      TableName: playerVehiclesDataTable,
-      Item: {
-        createdAt: Date.now(),
-        playerVehicleDataId: `${data.account_id}-${data.tank_id}`,
-        data,
-      },
-    }
-
     try {
-      const res = await docClient.putAsync(params)
-      logger.debug('savePlayerVehiclesData.success')
-      return res
+      const { account_id: accountId, tank_id: tankId } = data
+
+      if (accountId && tankId) {
+        const params = {
+          TableName: playerVehiclesDataTable,
+          Item: {
+            createdAt: Date.now(),
+            playerVehicleDataId: `${accountId}-${tankId}`,
+            data,
+          },
+        }
+        const res = await docClient.putAsync(params)
+        logger.debug('savePlayerVehiclesData.success')
+        return Success(res)
+      }
+      return Fail('savePlayerVehiclesData invalid params')
     } catch (error) {
-      logger.error('savePlayerVehiclesData.error', error)
-      throw error
+      return getErrorMessage('savePlayerVehiclesData.error', error)
     }
   }
 
   const getPlayerVehicles = async (accountId) => {
-    const params = {
-      TableName: playerVehiclesTable,
-      KeyConditionExpression: 'accountId = :accountId',
-      ExpressionAttributeValues: {
-        ':accountId': Number(accountId),
-      },
-    }
-
     try {
+      const params = {
+        TableName: playerVehiclesTable,
+        KeyConditionExpression: 'accountId = :accountId',
+        ExpressionAttributeValues: {
+          ':accountId': Number(accountId),
+        },
+      }
+
       const result = await docClient.queryAsync(params)
       logger.error('getPlayerVehicles.success', result.length)
 
-      return result
+      return Success(result)
     } catch (error) {
-      logger.error('getPlayerVehicles.error', error)
-      throw error
+      return getErrorMessage('getPlayerVehicles.error', error)
     }
   }
 
